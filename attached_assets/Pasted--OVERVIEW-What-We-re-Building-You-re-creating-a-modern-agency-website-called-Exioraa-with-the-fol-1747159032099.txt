@@ -1,0 +1,113 @@
+🧠 OVERVIEW: What We're Building
+You’re creating a modern agency website called Exioraa with the following:
+
+🔹 Goals:
+Bold, creative look inspired by WDesigna, etc.
+
+Smooth animations and transitions (GSAP + ScrollTrigger)
+
+Fully responsive for desktop, tablet, and mobile
+
+Fast-loading and SEO-friendly
+
+Deployed on Vercel
+
+🧱 STACK (Tech & Tools)
+Layer	Stack Used
+Frontend	Next.js (React Framework)
+Animations	GSAP, ScrollTrigger, SplitType
+Scrolling	Lenis (for smooth scroll)
+Assets	Lottie (for animated SVGs)
+Styling	Tailwind CSS or CSS Modules
+Deployment	Vercel (1-click GitHub deploy)
+Version Control	Git & GitHub
+
+📂 FILE & FOLDER STRUCTURE
+bash
+Copy
+Edit
+exioraa/
+├── public/
+│   ├── images/
+│   └── lottie/
+├── src/
+│   ├── components/
+│   │   ├── Hero.jsx
+│   │   ├── About.jsx
+│   │   ├── Services.jsx
+│   │   ├── Portfolio.jsx
+│   │   ├── ContactCTA.jsx
+│   │   ├── Navbar.jsx
+│   │   └── Footer.jsx
+│   ├── pages/
+│   │   ├── index.jsx
+│   │   ├── work.jsx
+│   │   └── contact.jsx
+│   ├── styles/
+│   │   └── globals.css
+│   └── utils/
+│       └── animations.js
+🧩 PAGE-BY-PAGE OVERVIEW
+✅ index.jsx – Home Page
+Components:
+Hero — Full-screen intro, text animations
+
+About — Philosophy and vision
+
+Services — Grid of offerings
+
+Portfolio — Featured projects
+
+ContactCTA — Call to action with animated button
+
+Footer — Contact links & socials
+
+✅ work.jsx – Work/Projects Page
+Full portfolio grid (GSAP staggered load-in)
+
+Optional hover interaction or page transition with Barba-like UX
+
+✅ contact.jsx – Contact Page
+Animated contact form
+
+Lottie or motion background
+
+CTA block with direct contact email or calendar link
+
+🖌️ DESIGN SYSTEM (Tailwind or CSS Modules)
+Fonts:
+Neue Montreal, Satoshi, or Inter
+(modern, professional sans-serifs)
+
+Color Palette:
+Purpose	Color
+Background	#0F0F0F
+Text Primary	#FFFFFF
+Accent (Green)	#14F195
+Accent (Alt)	#FF7A00
+
+Buttons:
+css
+Copy
+Edit
+.btn {
+  @apply px-6 py-2 rounded-2xl text-sm bg-accent text-black hover:bg-white hover:text-accent transition-all;
+}
+🔁 ANIMATION STRUCTURE (GSAP)
+Component	Animation Type	Tools
+Hero Title	Text Reveal	SplitType + GSAP
+About/Services	Scroll fade-up + stagger	ScrollTrigger
+Portfolio	Horizontal scroll + scale	GSAP Timeline
+CTA Section	Bounce loop / Hover FX	GSAP Repeat, Hover FX
+
+🚀 DEPLOYMENT VIA VERCEL
+Step-by-Step:
+Push your Next.js code to GitHub
+
+Go to https://vercel.com
+
+Click “New Project”, import GitHub repo
+
+Select Next.js as the framework
+
+Deploy and get your live link! 🎉
