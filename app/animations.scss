@@ -1,0 +1,242 @@
+/**
+ * Animations.scss
+ * Custom animations for the Exioraa website
+ */
+
+/* Text reveal animation */
+@keyframes textReveal {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.text-reveal {
+  overflow: hidden;
+  
+  .text-reveal-inner {
+    display: inline-block;
+    animation: textReveal 0.8s ease-out forwards;
+  }
+}
+
+/* Staggered text reveal for children */
+.stagger-text-reveal {
+  overflow: hidden;
+  
+  > * {
+    display: inline-block;
+    animation: textReveal 0.8s ease-out forwards;
+    
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
+  }
+}
+
+/* Border animation */
+@keyframes borderGrow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-border {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    animation: borderGrow 0.6s ease-out forwards;
+  }
+}
+
+/* Gradient text animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-text {
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradientAnimation 3s ease-in-out infinite;
+}
+
+/* Spin animation for loaders */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Text wave animation */
+.text-wave {
+  display: inline-flex;
+  
+  span {
+    display: inline-block;
+    animation: letterWave 1.5s ease-in-out infinite;
+    
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
+  }
+}
+
+@keyframes letterWave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Page transition animations */
+@keyframes pageTransitionOut {
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes pageTransitionIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.page-exit {
+  animation: pageTransitionOut 0.5s ease forwards;
+}
+
+.page-enter {
+  animation: pageTransitionIn 0.5s ease forwards;
+}
+
+/* Project card hover effect */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .project-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  &:hover {
+    .project-overlay {
+      opacity: 1;
+    }
+    
+    .project-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform var(--transition-fast) ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.hover-zoom {
+  overflow: hidden;
+  
+  img {
+    transition: transform 0.5s ease;
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+}

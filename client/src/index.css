@@ -3,119 +3,343 @@
 @tailwind utilities;
 
 :root {
-  /* Main colors */
-  --background: 222 47% 11%;
-  --foreground: 0 0% 100%;
-
-  /* UI Component colors */
-  --primary: 240 100% 67%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 220 18% 16%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 240 4% 16%;
-  --muted-foreground: 240 5% 65%;
-  --accent: 326 73% 60%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 0 0% 98%;
-  --card: 224 71% 4%;
-  --card-foreground: 0 0% 100%;
-  --popover: 224 71% 4%;
-  --popover-foreground: 0 0% 100%;
-  --border: 240 4% 16%;
-  --input: 240 4% 16%;
-  --ring: 240 5% 84%;
-  --radius: 0.5rem;
-
-  /* Chart colors */
-  --chart-1: 240 100% 67%;
-  --chart-2: 326 73% 60%;
-  --chart-3: 30 90% 60%;
-  --chart-4: 130 60% 55%;
-  --chart-5: 275 80% 60%;
-
+  /* Base colors */
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  
+  /* Primary colors - Rich dark blue to dark purple gradient */
+  --primary: 240 50% 10%;
+  --primary-dark: 240 60% 6%;
+  --primary-light: 240 40% 20%;
+  --primary-foreground: 210 40% 98%;
+  
+  /* Secondary colors - Slate with purple undertone */
+  --secondary: 250 15% 65%;
+  --secondary-dark: 250 20% 55%;
+  --secondary-light: 250 10% 75%;
+  --secondary-foreground: 222 47% 11%;
+  
+  /* Accent colors - Vibrant electric blue */
+  --accent: 210 100% 50%;
+  --accent-dark: 210 100% 40%;
+  --accent-light: 210 100% 60%;
+  --accent-foreground: 210 40% 98%;
+  
+  /* Highlight colors - Soft magenta/purple for special elements */
+  --highlight: 280 75% 60%;
+  --highlight-dark: 280 80% 50%;
+  --highlight-light: 280 75% 70%;
+  
+  /* Success colors - Teal gradient */
+  --success: 175 84% 45%;
+  --success-dark: 175 90% 35%;
+  --success-light: 175 80% 55%;
+  
+  /* Warning colors - Amber gradient */
+  --warning: 45 100% 50%;
+  --warning-dark: 45 100% 40%;
+  --warning-light: 45 100% 60%;
+  
+  /* Utility colors */
+  --muted: 240 30% 96%;
+  --muted-foreground: 215 16% 47%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  
+  --border: 240 30% 92%;
+  --input: 240 30% 92%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --ring: 210 100% 50%;
+  
+  /* Chart colors - Cohesive palette */
+  --chart-1: 240 50% 10%; /* Primary */
+  --chart-2: 250 15% 65%; /* Secondary */
+  --chart-3: 210 100% 50%; /* Accent */
+  --chart-4: 280 75% 60%; /* Highlight */
+  --chart-5: 175 84% 45%; /* Success */
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(240, 50%, 10%), hsl(250, 60%, 15%));
+  --gradient-accent: linear-gradient(135deg, hsl(210, 100%, 50%), hsl(230, 100%, 45%));
+  --gradient-highlight: linear-gradient(135deg, hsl(280, 75%, 60%), hsl(320, 80%, 60%));
+  --gradient-success: linear-gradient(135deg, hsl(175, 84%, 45%), hsl(160, 84%, 45%));
+  --gradient-warning: linear-gradient(135deg, hsl(45, 100%, 50%), hsl(30, 100%, 50%));
+  
   /* Sidebar colors */
-  --sidebar-background: 224 71% 4%;
+  --sidebar-background: 240 50% 8%;
   --sidebar-foreground: 0 0% 100%;
-  --sidebar-primary: 240 100% 67%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 326 73% 60%;
+  --sidebar-primary: 210 100% 50%;
+  --sidebar-primary-foreground: 210 40% 98%;
+  --sidebar-accent: 250 15% 65%;
   --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 240 4% 16%;
-  --sidebar-ring: 240 5% 84%;
+  --sidebar-border: 240 30% 15%;
+  --sidebar-ring: 210 100% 50%;
+  
+  --radius: 0.5rem;
+  
+  /* Exioraa specific variables */
+  --header-height: 80px;
+  --footer-height: 300px;
+  --container-width: 1200px;
+  --grid-gap: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.2);
+  --shadow-inner: inset 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-accent: 0 5px 15px rgba(33, 150, 243, 0.4);
+  --shadow-highlight: 0 5px 15px rgba(156, 39, 176, 0.4);
+  
+  /* Transition speeds */
+  --transition-slow: 0.8s;
+  --transition-medium: 0.5s;
+  --transition-fast: 0.3s;
+  
+  /* Font weights */
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+}
+
+.dark {
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  
+  --primary: 210 40% 98%;
+  --primary-foreground: 222 47% 11%;
+  
+  --secondary: 215 20% 65%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --accent: 199 89% 59%;
+  --accent-foreground: 222 47% 11%;
+  
+  --muted: 223 47% 20%;
+  --muted-foreground: 215 20% 75%;
+  
+  --popover: 222 47% 11%;
+  --popover-foreground: 210 40% 98%;
+  
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+  
+  --border: 222 47% 20%;
+  --input: 222 47% 20%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --ring: 199 89% 59%;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   body {
-    @apply font-inter bg-background text-foreground antialiased overflow-x-hidden;
-    cursor: none;
+    @apply font-sans antialiased bg-background text-foreground;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   }
   
-  .font-clash {
-    font-family: 'Clash Display', sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
   }
   
-  .font-inter {
-    font-family: 'Inter', sans-serif;
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl;
   }
   
-  /* Noise texture overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1000;
+  h2 {
+    @apply text-3xl sm:text-4xl md:text-5xl;
   }
   
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
+  h3 {
+    @apply text-2xl sm:text-3xl;
   }
   
-  ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+  h4 {
+    @apply text-xl sm:text-2xl;
   }
   
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
+  h5 {
+    @apply text-lg sm:text-xl;
   }
   
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+  h6 {
+    @apply text-base sm:text-lg;
   }
   
-  /* Horizontal scroll styling */
-  .horizontal-scroll {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  p {
+    @apply mb-4;
   }
   
-  .horizontal-scroll::-webkit-scrollbar {
-    display: none;
+  a {
+    @apply text-accent hover:text-accent/80 transition-colors;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-[var(--container-width)] mx-auto px-4;
   }
   
-  .scroll-item {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
+  .section {
+    @apply py-16 md:py-24;
   }
   
-  /* Stagger animation classes */
-  .stagger-item {
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-10;
+  }
+  
+  .section-subtitle {
+    @apply text-xl md:text-2xl text-secondary mb-4;
+  }
+  
+  .button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-colors;
+  }
+  
+  .button-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors;
+  }
+  
+  .button-accent {
+    @apply bg-accent text-accent-foreground hover:bg-accent/90 transition-colors;
+  }
+}
+
+/* App-specific styles */
+.app-container {
+  @apply min-h-screen flex flex-col;
+}
+
+.main-content {
+  @apply flex-grow;
+}
+
+/* Smooth scrolling */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Special text styles */
+.text-gradient {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary;
+}
+
+/* Animated particles for HeroSection */
+.particles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  background-color: rgba(56, 189, 248, 0.6);
+  border-radius: 50%;
+  animation: float linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
     opacity: 0;
-    transform: translateY(20px);
   }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20vw);
+    opacity: 0;
+  }
+}
+
+/* Text animations */
+.char {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+/* Custom cursor styles */
+.custom-cursor {
+  @apply fixed pointer-events-none z-50 w-8 h-8 rounded-full bg-accent/30 transform -translate-x-1/2 -translate-y-1/2 mix-blend-difference;
+  transition: transform 0.1s ease;
+}
+
+.cursor-text {
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-medium text-white opacity-0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-cursor.hover {
+  @apply w-20 h-20;
+}
+
+.custom-cursor.hover .cursor-text {
+  @apply opacity-100;
+}
+
+/* Responsive grid */
+.grid-container {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--grid-gap)];
+}
+
+/* Advanced hover effects */
+.hover-lift {
+  transition: transform var(--transition-fast) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Loading screen */
+.loading-screen {
+  @apply fixed inset-0 bg-background z-50 flex items-center justify-center;
+}
+
+.loading-logo {
+  @apply w-24 h-24 animate-spin-slow;
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
 }
