@@ -16,6 +16,7 @@ import { EnhancedLiveChat } from "@/components/enhanced-live-chat"
 import { AboutModal } from "@/components/about-modal"
 import { MobileNavigation } from "@/components/mobile-navigation"
 import { TrustedCompanies } from "@/components/trusted-companies"
+import { GlassmorphicNav } from "@/components/glassmorphic-nav"
 
 export default function ExioraaWebsite() {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
@@ -52,83 +53,8 @@ export default function ExioraaWebsite() {
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Enhanced Brand Header */}
-      <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 transition-all duration-300 relative" style={{ position: 'fixed' }}>
-        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex items-center justify-between">
-            {/* Animated Logo */}
-            <button
-              onClick={scrollToTop}
-              className="text-xl sm:text-2xl font-bold text-white hover:scale-110 transition-all duration-500 hover:rotate-3 relative group"
-            >
-              <span className="relative z-10 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                Exioraa
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150"></div>
-            </button>
-
-            {/* Desktop Navigation with Animations */}
-            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-              {[
-                { label: "Services", action: () => scrollToSection("services") },
-                { label: "About", action: () => setIsAboutModalOpen(true) },
-                { label: "Work", action: () => scrollToSection("work") },
-                { label: "Tools", action: () => window.open("/tools", "_blank") },
-                { label: "Contact", action: () => scrollToSection("contact") },
-                { label: "Portal", action: () => window.open("/portal", "_blank") },
-              ].map((item, index) => (
-                <button
-                  key={item.label}
-                  onClick={item.action}
-                  className="relative text-gray-300 hover:text-white transition-all duration-300 group overflow-hidden text-sm lg:text-base"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <span className="relative z-10 transform group-hover:scale-105 transition-transform duration-300">
-                    {item.label}
-                  </span>
-                  {/* Hover underline animation */}
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-cyan-400 group-hover:w-full transition-all duration-500 ease-out"></div>
-                  {/* Hover background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110"></div>
-                </button>
-              ))}
-            </div>
-
-            {/* Desktop CTA Button */}
-            <Button
-              className="hidden md:flex relative bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 hover:scale-105 transition-all duration-300 overflow-hidden group text-sm lg:text-base"
-              onClick={() => scrollToSection("contact")}
-            >
-              <span className="relative z-10 transform group-hover:scale-105 transition-transform duration-300">
-                Get Started
-              </span>
-              {/* Button shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
-              {/* Button glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-cyan-400/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-150"></div>
-            </Button>
-
-            {/* Mobile Navigation */}
-            <MobileNavigation onNavigate={scrollToSection} onAboutClick={() => setIsAboutModalOpen(true)} />
-          </div>
-
-          {/* Navigation background animation */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/5 via-transparent to-cyan-900/5 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-        </div>
-
-        {/* Floating particles animation */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-pulse"></div>
-          <div
-            className="absolute top-1/3 right-1/3 w-1 h-1 bg-cyan-400/40 rounded-full animate-ping"
-            style={{ animationDelay: "1s" }}
-          ></div>
-          <div
-            className="absolute bottom-1/2 right-1/4 w-1.5 h-1.5 bg-purple-300/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
-        </div>
-      </nav>
+      {/* Glassmorphic Navigation */}
+      <GlassmorphicNav onNavigate={scrollToSection} onAboutClick={() => setIsAboutModalOpen(true)} />
 
       <main id="main-content" className="pt-20">
         {mounted && <Hero3D />}
