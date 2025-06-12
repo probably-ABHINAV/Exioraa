@@ -17,8 +17,8 @@ runButton = "Development"
 [[workflows.workflow]]
 name = "Development"
 author = 43737821
-mode = "sequential"
+mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev"
+args = "npm run dev "

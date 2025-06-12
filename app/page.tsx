@@ -4,14 +4,18 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Github, Twitter, Linkedin, Instagram } from "lucide-react"
 import { Hero3D } from "@/components/hero-3d"
-import { AnimatedServices } from "@/components/animated-services"
-import { ParallaxProjects } from "@/components/parallax-projects"
 import { TechStack3D } from "@/components/tech-stack-3d"
+import { ParallaxProjects } from "@/components/parallax-projects"
+import { ClientTestimonials } from "@/components/client-testimonials"
+import { FeaturesShowcase } from "@/components/features-showcase"
+import { BlogPreview } from "@/components/blog-preview"
+import { BudgetCalculator } from "@/components/budget-calculator"
+import { NewsletterSignup } from "@/components/newsletter-signup"
+import { FunctionalContact } from "@/components/functional-contact"
+import { EnhancedLiveChat } from "@/components/enhanced-live-chat"
 import { AboutModal } from "@/components/about-modal"
 import { MobileNavigation } from "@/components/mobile-navigation"
-import { FeaturesShowcase } from "@/components/features-showcase"
-import { LiveChat } from "@/components/live-chat"
-import { FunctionalContact } from "@/components/functional-contact"
+import { TrustedCompanies } from "@/components/trusted-companies"
 
 export default function ExioraaWebsite() {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
@@ -47,8 +51,8 @@ export default function ExioraaWebsite() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
-      {/* Navigation */}
+    <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
+      {/* Enhanced Brand Header */}
       <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 transition-all duration-300 relative" style={{ position: 'fixed' }}>
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
@@ -69,7 +73,7 @@ export default function ExioraaWebsite() {
                 { label: "Services", action: () => scrollToSection("services") },
                 { label: "About", action: () => setIsAboutModalOpen(true) },
                 { label: "Work", action: () => scrollToSection("work") },
-                { label: "Tools", action: () => scrollToSection("tools") },
+                { label: "Tools", action: () => window.open("/tools", "_blank") },
                 { label: "Contact", action: () => scrollToSection("contact") },
                 { label: "Portal", action: () => window.open("/portal", "_blank") },
               ].map((item, index) => (
@@ -126,33 +130,48 @@ export default function ExioraaWebsite() {
         </div>
       </nav>
 
-      {/* Hero Section with 3D */}
-      <section id="hero">
+      <main id="main-content" className="pt-20">
         {mounted && <Hero3D />}
-      </section>
-
-      {/* Animated Services Section */}
-      <section id="services">
-        {mounted && <AnimatedServices />}
-      </section>
-
-      {/* Parallax Projects Section */}
-      <section id="work">
+        {mounted && <TechStack3D />}
         {mounted && <ParallaxProjects />}
-      </section>
-
-      {/* 3D Tech Stack */}
-      {mounted && <TechStack3D />}
-
-      {/* Features & Tools Section */}
-      <section id="tools">
+        {mounted && <TrustedCompanies />}
         {mounted && <FeaturesShowcase />}
-      </section>
-
-      {/* Functional Contact Section */}
-      <section id="contact">
+        <section id="tools" className="py-24 bg-gradient-to-b from-gray-900/50 to-black">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Our Tools & Technologies
+            </h2>
+            <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
+              We use cutting-edge tools and technologies to deliver exceptional digital experiences
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+              {[
+                "React", "Next.js", "TypeScript", "Node.js", "Python", "AWS",
+                "Docker", "MongoDB", "PostgreSQL", "Redis", "GraphQL", "REST API"
+              ].map((tool, index) => (
+                <div
+                  key={tool}
+                  className="group p-4 bg-gray-800/50 rounded-lg hover:bg-gray-700/50 transition-all duration-300 hover:scale-105 border border-gray-700/50"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg mx-auto mb-3 flex items-center justify-center text-white font-bold">
+                    {tool.charAt(0)}
+                  </div>
+                  <h3 className="text-white font-semibold text-sm">{tool}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        {mounted && <BlogPreview />}
+        {mounted && <BudgetCalculator />}
+        <div className="py-24 bg-gradient-to-b from-gray-900 to-black">
+          <div className="container mx-auto px-6">
+            {mounted && <NewsletterSignup />}
+          </div>
+        </div>
         {mounted && <FunctionalContact />}
-      </section>
+        {mounted && <EnhancedLiveChat />}
+      </main>
 
       {/* Footer */}
       <footer className="py-8 sm:py-12 px-4 sm:px-6 border-t border-gray-800">
@@ -304,9 +323,6 @@ export default function ExioraaWebsite() {
 
       {/* About Modal */}
       {mounted && <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />}
-
-      {/* Live Chat */}
-      {mounted && <LiveChat />}
     </div>
   )
 }

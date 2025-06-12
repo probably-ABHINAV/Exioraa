@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Calculator, DollarSign, Clock, Users } from "lucide-react"
+import { DetailedQuoteModal } from "@/components/detailed-quote-modal"
 
 interface ProjectFeature {
   id: string
@@ -118,6 +119,7 @@ export function BudgetCalculator() {
   const [teamSize, setTeamSize] = useState([3])
   const [includeSupport, setIncludeSupport] = useState(false)
   const [includeHosting, setIncludeHosting] = useState(false)
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false)
 
   const toggleFeature = (featureId: string) => {
     setSelectedFeatures((prev) =>
@@ -356,7 +358,10 @@ export function BudgetCalculator() {
                 )}
               </div>
 
-              <Button className="w-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700">
+              <Button 
+                className="w-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700"
+                onClick={() => setIsQuoteModalOpen(true)}
+              >
                 Get Detailed Quote
               </Button>
 
@@ -369,6 +374,20 @@ export function BudgetCalculator() {
           </Card>
         </div>
       </div>
+
+      <DetailedQuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+        estimatedCost={calculateTotal()}
+        selectedFeatures={selectedFeatures}
+        projectDetails={{
+          complexity,
+          timeline: timeline[0],
+          teamSize: teamSize[0],
+          includeSupport,
+          includeHosting,
+        }}
+      />
     </div>
   )
 }
