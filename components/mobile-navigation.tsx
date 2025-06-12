@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -34,7 +33,7 @@ export function MobileNavigation({ onNavigate, onAboutClick }: MobileNavigationP
       action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
     },
     { label: "Services", icon: <Briefcase className="w-5 h-5" />, action: () => onNavigate("services") },
-    { label: "About", icon: <User className="w-5 h-5" />, action: onAboutClick },
+    { label: "About", icon: <User className="w-5 h-5" />, action: () => onAboutClick },
     { label: "Work", icon: <Briefcase className="w-5 h-5" />, action: () => onNavigate("work") },
     { label: "Tools", icon: <Wrench className="w-5 h-5" />, action: () => onNavigate("tools") },
     { label: "Contact", icon: <Phone className="w-5 h-5" />, action: () => onNavigate("contact") },
