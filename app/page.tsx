@@ -54,14 +54,20 @@ export default function ExioraaWebsite() {
   return (
     <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
       {/* Glassmorphic Navigation */}
-      <GlassmorphicNav onNavigate={scrollToSection} onAboutClick={() => setIsAboutModalOpen(true)} />
+      {mounted && <GlassmorphicNav onNavigate={scrollToSection} onAboutClick={() => setIsAboutModalOpen(true)} />}
 
       <main id="main-content" className="pt-20">
-        {mounted && <Hero3D />}
-        {mounted && <TechStack3D />}
-        {mounted && <ParallaxProjects />}
+        <section id="home">
+          {mounted && <Hero3D />}
+        </section>
+        <section id="services">
+          {mounted && <TechStack3D />}
+          {mounted && <FeaturesShowcase />}
+        </section>
+        <section id="work">
+          {mounted && <ParallaxProjects />}
+        </section>
         {mounted && <TrustedCompanies />}
-        {mounted && <FeaturesShowcase />}
         <section id="tools" className="py-24 bg-gradient-to-b from-gray-900/50 to-black">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
@@ -95,7 +101,9 @@ export default function ExioraaWebsite() {
             {mounted && <NewsletterSignup />}
           </div>
         </div>
-        {mounted && <FunctionalContact />}
+        <section id="contact">
+          {mounted && <FunctionalContact />}
+        </section>
         {mounted && <EnhancedLiveChat />}
       </main>
 
