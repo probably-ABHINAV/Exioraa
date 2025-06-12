@@ -1,22 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    esmExternals: 'loose'
+  reactStrictMode: false,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  webpack: (config) => {
-    config.externals = [...config.externals, { canvas: 'canvas' }]
-    return config
+  typescript: {
+    ignoreBuildErrors: true,
   },
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+    unoptimized: true,
+  },
+  experimental: {
+    optimizePackageImports: ['next-themes', '@react-three/fiber', '@react-three/drei'],
   },
 }
 

@@ -16,8 +16,8 @@ interface Message {
 }
 
 export function EnhancedLiveChat() {
-  const [mounted, setMounted] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(false)
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -29,11 +29,6 @@ export function EnhancedLiveChat() {
   ])
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const [isMinimized, setIsMinimized] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -79,10 +74,6 @@ export function EnhancedLiveChat() {
       "Thanks for reaching out! We specialize in exactly what you're looking for."
     ]
     return responses[Math.floor(Math.random() * responses.length)]
-  }
-
-  if (!mounted) {
-    return null
   }
 
   return (
