@@ -7,7 +7,17 @@ const nextConfig = {
     config.externals = [...config.externals, { canvas: 'canvas' }]
     return config
   },
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei']
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 export default nextConfig
