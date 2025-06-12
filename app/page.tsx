@@ -1,3 +1,6 @@
+The code fixes the unclosed main tag and replaces LiveChat with EnhancedLiveChat.
+```
+```replit_final_file
 "use client"
 
 import { useState, useEffect } from "react"
@@ -129,7 +132,7 @@ export default function ExioraaWebsite() {
         </div>
       </nav>
 
-      <div className="pt-20">
+      <main className="pt-20">
         {mounted && <Hero3D />}
         {mounted && <TechStack3D />}
         {mounted && <ParallaxProjects />}
@@ -144,7 +147,7 @@ export default function ExioraaWebsite() {
         </div>
         {mounted && <FunctionalContact />}
         {mounted && <EnhancedLiveChat />}
-      </div>
+      </main>
 
       {/* Footer */}
       <footer className="py-8 sm:py-12 px-4 sm:px-6 border-t border-gray-800">
@@ -296,9 +299,7 @@ export default function ExioraaWebsite() {
 
       {/* About Modal */}
       {mounted && <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />}
-
-      {/* Live Chat */}
-      {mounted && <LiveChat />}
+    </main>
     </div>
   )
 }

@@ -134,7 +134,7 @@ export function BudgetCalculator() {
     const complexityAdjusted = baseTotal * complexityMultipliers[complexity].multiplier
 
     // Timeline adjustment (rush jobs cost more)
-    const timelineMultiplier = timeline[0] < 8 ? 1.3 : timeline[0] < 12 ? 1.1 : 1.0
+    const timelineMultiplier = timeline[0] < 8 ? 1.3 : timeline[0]ne[0] < 12 ? 1.1 : 1.0
 
     // Team size adjustment
     const teamMultiplier = 1 + (teamSize[0] - 3) * 0.1
@@ -175,6 +175,7 @@ export function BudgetCalculator() {
       style: "currency",
       currency: "INR",
       maximumFractionDigits: 0,
+    }).format(amount)
     }).format(amount)
   }
 
