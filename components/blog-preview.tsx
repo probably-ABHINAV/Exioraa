@@ -128,7 +128,12 @@ export function BlogPreview() {
                       ))}
                     </div>
                     
-                    <Button variant="ghost" size="sm" className="text-purple-400 hover:text-purple-300 p-0">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-purple-400 hover:text-purple-300 p-0"
+                      onClick={() => window.open('/blog', '_blank')}
+                    >
                       Read More
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -147,7 +152,10 @@ export function BlogPreview() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <Button className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90 text-white px-8 py-3">
+          <Button 
+            className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90 text-white px-8 py-3"
+            onClick={() => window.open('/blog', '_blank')}
+          >
             View All Articles
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>

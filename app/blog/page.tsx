@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react"
@@ -19,16 +18,16 @@ const blogPosts = [
     content: `
       <h2>Introduction</h2>
       <p>The web development landscape is evolving at an unprecedented pace. As we navigate through 2024, several key trends are reshaping how we build, deploy, and maintain web applications.</p>
-      
+
       <h2>1. AI-Powered Development Tools</h2>
       <p>Artificial Intelligence is no longer just a buzzword—it's becoming an integral part of the development workflow. Tools like GitHub Copilot, ChatGPT, and custom AI assistants are helping developers write code faster and more efficiently.</p>
-      
+
       <h2>2. Progressive Web Apps (PWAs)</h2>
       <p>PWAs continue to bridge the gap between web and native applications, offering app-like experiences with web technologies. They provide offline functionality, push notifications, and native app feel while being discoverable through search engines.</p>
-      
+
       <h2>3. Sustainable Web Development</h2>
       <p>With growing awareness of climate change, developers are focusing on building more sustainable applications. This includes optimizing for performance, reducing carbon footprint, and implementing green coding practices.</p>
-      
+
       <h2>Conclusion</h2>
       <p>The future of web development is bright and full of possibilities. By staying updated with these trends and continuously learning, developers can build better, more efficient applications that serve users and the planet.</p>
     `,
@@ -49,13 +48,13 @@ const blogPosts = [
     content: `
       <h2>Why React Native?</h2>
       <p>React Native has revolutionized mobile app development by allowing developers to write once and deploy everywhere. It combines the best of native development with React's developer experience.</p>
-      
+
       <h2>Architecture Patterns</h2>
       <p>Implementing proper architecture patterns is crucial for scalability. We'll explore Clean Architecture, MVVM, and Redux patterns that help maintain large codebases.</p>
-      
+
       <h2>Performance Optimization</h2>
       <p>Performance is key in mobile apps. Learn about memory management, lazy loading, image optimization, and other techniques to keep your app running smoothly.</p>
-      
+
       <h2>Testing Strategies</h2>
       <p>Comprehensive testing ensures app reliability. We'll cover unit testing, integration testing, and end-to-end testing approaches for React Native apps.</p>
     `,
@@ -76,13 +75,13 @@ const blogPosts = [
     content: `
       <h2>User-Centered Design</h2>
       <p>Everything starts with understanding your users. Learn how to conduct user research, create personas, and design with empathy at the core of your process.</p>
-      
+
       <h2>Accessibility First</h2>
       <p>Inclusive design isn't optional—it's essential. We'll explore WCAG guidelines, color contrast, keyboard navigation, and screen reader compatibility.</p>
-      
+
       <h2>Visual Hierarchy</h2>
       <p>Guide users through your interface with effective visual hierarchy. Learn about typography, spacing, color theory, and layout principles that enhance usability.</p>
-      
+
       <h2>Micro-interactions</h2>
       <p>Small details make big differences. Discover how micro-interactions, animations, and feedback mechanisms create delightful user experiences.</p>
     `,
@@ -103,13 +102,13 @@ const blogPosts = [
     content: `
       <h2>ML in the Browser</h2>
       <p>TensorFlow.js enables machine learning directly in web browsers, providing real-time inference without server round-trips. Perfect for privacy-sensitive applications.</p>
-      
+
       <h2>Cloud AI Services</h2>
       <p>Leverage powerful cloud platforms like Google Cloud AI, AWS SageMaker, and Azure Cognitive Services to add sophisticated AI capabilities to your applications.</p>
-      
+
       <h2>Real-world Applications</h2>
       <p>From image recognition to natural language processing, discover practical use cases and implementation strategies for common ML scenarios in web development.</p>
-      
+
       <h2>Performance Considerations</h2>
       <p>Learn how to optimize ML models for web deployment, including model compression, caching strategies, and progressive loading techniques.</p>
     `,
@@ -130,13 +129,13 @@ const blogPosts = [
     content: `
       <h2>The App Router Revolution</h2>
       <p>Next.js 14's App Router introduces a new paradigm for building React applications with improved performance, better developer experience, and enhanced SEO capabilities.</p>
-      
+
       <h2>Server Components Explained</h2>
       <p>Understand the difference between Server and Client Components, when to use each, and how they work together to create optimal user experiences.</p>
-      
+
       <h2>Streaming and Suspense</h2>
       <p>Learn how to implement streaming for faster page loads, progressive rendering, and better perceived performance using React Suspense boundaries.</p>
-      
+
       <h2>Migration Strategies</h2>
       <p>Practical guidance for migrating existing Next.js applications to the App Router, common pitfalls to avoid, and best practices for a smooth transition.</p>
     `,
@@ -157,13 +156,13 @@ const blogPosts = [
     content: `
       <h2>AI-Powered Personalization</h2>
       <p>Learn how AI algorithms can analyze user behavior to deliver personalized content, product recommendations, and targeted marketing messages at scale.</p>
-      
+
       <h2>Marketing Automation Tools</h2>
       <p>Explore the latest marketing automation platforms, from email marketing to social media management, and how AI enhances their effectiveness.</p>
-      
+
       <h2>Predictive Analytics</h2>
       <p>Use machine learning to predict customer behavior, optimize ad spend, and identify high-value prospects before your competitors do.</p>
-      
+
       <h2>ROI Measurement</h2>
       <p>Implement comprehensive tracking and analytics to measure the true impact of your AI-driven marketing campaigns and optimize for maximum ROI.</p>
     `,
@@ -211,13 +210,13 @@ export default function BlogPage() {
                 alt={selectedPost.title}
                 className="w-full h-64 object-cover rounded-lg mb-6"
               />
-              
+
               <Badge className="bg-gradient-to-r from-purple-500 to-cyan-500 text-white mb-4">
                 {selectedPost.category}
               </Badge>
-              
+
               <h1 className="text-4xl font-bold text-white mb-4">{selectedPost.title}</h1>
-              
+
               <div className="flex items-center space-x-6 text-gray-400 mb-6">
                 <div className="flex items-center space-x-2">
                   <User className="w-4 h-4" />
@@ -337,7 +336,10 @@ export default function BlogPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <Card className="bg-gray-900/50 border-gray-700 hover:border-purple-500/50 transition-all duration-300 group overflow-hidden cursor-pointer">
+                  <Card 
+                    className="bg-gray-900/50 border-gray-700 hover:border-purple-500/50 transition-all duration-300 group overflow-hidden cursor-pointer"
+                    onClick={() => setSelectedPost(post)}
+                  >
                     <div className="relative overflow-hidden">
                       <img
                         src={post.image}
@@ -350,8 +352,8 @@ export default function BlogPage() {
                         </Badge>
                       </div>
                     </div>
-                    
-                    <CardContent className="p-6" onClick={() => setSelectedPost(post)}>
+
+                    <CardContent className="p-6">
                       <div className="flex items-center space-x-4 text-sm text-gray-400 mb-3">
                         <div className="flex items-center space-x-1">
                           <User className="w-4 h-4" />
@@ -366,15 +368,15 @@ export default function BlogPage() {
                           <span>{post.views}</span>
                         </div>
                       </div>
-                      
+
                       <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
                         {post.title}
                       </h3>
-                      
+
                       <p className="text-gray-400 mb-4 line-clamp-3">
                         {post.excerpt}
                       </p>
-                      
+
                       <div className="flex items-center justify-between">
                         <div className="flex flex-wrap gap-2">
                           {post.tags.slice(0, 2).map((tag) => (
@@ -383,7 +385,7 @@ export default function BlogPage() {
                             </Badge>
                           ))}
                         </div>
-                        
+
                         <Button variant="ghost" size="sm" className="text-purple-400 hover:text-purple-300 p-0">
                           Read More
                           <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -406,7 +408,10 @@ export default function BlogPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Card className="bg-gray-900/50 border-gray-700 hover:border-purple-500/50 transition-all duration-300 group overflow-hidden cursor-pointer h-full">
+              <Card 
+                className="bg-gray-900/50 border-gray-700 hover:border-purple-500/50 transition-all duration-300 group overflow-hidden cursor-pointer h-full"
+                onClick={() => setSelectedPost(post)}
+              >
                 <div className="relative overflow-hidden">
                   <img
                     src={post.image}
@@ -419,8 +424,8 @@ export default function BlogPage() {
                     </Badge>
                   </div>
                 </div>
-                
-                <CardContent className="p-6 flex flex-col flex-1" onClick={() => setSelectedPost(post)}>
+
+                <CardContent className="p-6 flex flex-col flex-1">
                   <div className="flex items-center space-x-4 text-sm text-gray-400 mb-3">
                     <div className="flex items-center space-x-1">
                       <User className="w-4 h-4" />
@@ -431,15 +436,15 @@ export default function BlogPage() {
                       <span>{new Date(post.date).toLocaleDateString()}</span>
                     </div>
                   </div>
-                  
+
                   <h3 className="text-lg font-bold text-white mb-3 group-hover:text-purple-400 transition-colors flex-1">
                     {post.title}
                   </h3>
-                  
+
                   <p className="text-gray-400 mb-4 text-sm line-clamp-3">
                     {post.excerpt}
                   </p>
-                  
+
                   <div className="flex items-center justify-between mt-auto">
                     <div className="flex items-center space-x-3 text-xs text-gray-400">
                       <div className="flex items-center space-x-1">
@@ -455,7 +460,7 @@ export default function BlogPage() {
                         <span>{post.likes}</span>
                       </div>
                     </div>
-                    
+
                     <Button variant="ghost" size="sm" className="text-purple-400 hover:text-purple-300 p-0 text-xs">
                       Read More
                       <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
