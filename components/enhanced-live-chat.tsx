@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
@@ -173,7 +172,7 @@ export function EnhancedLiveChat() {
                         </div>
                       </motion.div>
                     ))}
-                    
+
                     {isTyping && (
                       <div className="flex justify-start">
                         <div className="flex items-center space-x-2">

@@ -73,7 +73,7 @@ export default function ExioraaWebsite() {
                 { label: "Services", action: () => scrollToSection("services") },
                 { label: "About", action: () => setIsAboutModalOpen(true) },
                 { label: "Work", action: () => scrollToSection("work") },
-                { label: "Tools", action: () => scrollToSection("tools") },
+                { label: "Tools", action: () => window.open("/tools", "_blank") },
                 { label: "Contact", action: () => scrollToSection("contact") },
                 { label: "Portal", action: () => window.open("/portal", "_blank") },
               ].map((item, index) => (
@@ -130,12 +130,38 @@ export default function ExioraaWebsite() {
         </div>
       </nav>
 
-      <main className="pt-20">
+      <main id="main-content" className="pt-20">
         {mounted && <Hero3D />}
         {mounted && <TechStack3D />}
         {mounted && <ParallaxProjects />}
         {mounted && <TrustedCompanies />}
         {mounted && <FeaturesShowcase />}
+        <section id="tools" className="py-24 bg-gradient-to-b from-gray-900/50 to-black">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Our Tools & Technologies
+            </h2>
+            <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
+              We use cutting-edge tools and technologies to deliver exceptional digital experiences
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+              {[
+                "React", "Next.js", "TypeScript", "Node.js", "Python", "AWS",
+                "Docker", "MongoDB", "PostgreSQL", "Redis", "GraphQL", "REST API"
+              ].map((tool, index) => (
+                <div
+                  key={tool}
+                  className="group p-4 bg-gray-800/50 rounded-lg hover:bg-gray-700/50 transition-all duration-300 hover:scale-105 border border-gray-700/50"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg mx-auto mb-3 flex items-center justify-center text-white font-bold">
+                    {tool.charAt(0)}
+                  </div>
+                  <h3 className="text-white font-semibold text-sm">{tool}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         {mounted && <BlogPreview />}
         {mounted && <BudgetCalculator />}
         <div className="py-24 bg-gradient-to-b from-gray-900 to-black">
