@@ -36,6 +36,7 @@ export function MobileNavigation({ onNavigate, onAboutClick }: MobileNavigationP
     { label: "About", icon: <User className="w-5 h-5" />, action: () => onAboutClick },
     { label: "Work", icon: <Briefcase className="w-5 h-5" />, action: () => onNavigate("work") },
     { label: "Tools", icon: <Wrench className="w-5 h-5" />, action: () => onNavigate("tools") },
+    { label: "Blog", icon: <ExternalLink className="w-5 h-5" />, action: () => window.open("/blog", "_blank") },
     { label: "Contact", icon: <Phone className="w-5 h-5" />, action: () => onNavigate("contact") },
     { label: "Portal", icon: <ExternalLink className="w-5 h-5" />, action: () => window.open("/portal", "_blank") },
   ]

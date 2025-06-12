@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -16,6 +15,7 @@ import { FunctionalContact } from "@/components/functional-contact"
 import { EnhancedLiveChat } from "@/components/enhanced-live-chat"
 import { AboutModal } from "@/components/about-modal"
 import { MobileNavigation } from "@/components/mobile-navigation"
+import { TrustedCompanies } from "@/components/trusted-companies"
 
 export default function ExioraaWebsite() {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
@@ -134,7 +134,7 @@ export default function ExioraaWebsite() {
         {mounted && <Hero3D />}
         {mounted && <TechStack3D />}
         {mounted && <ParallaxProjects />}
-        {mounted && <ClientTestimonials />}
+        {mounted && <TrustedCompanies />}
         {mounted && <FeaturesShowcase />}
         {mounted && <BlogPreview />}
         {mounted && <BudgetCalculator />}
