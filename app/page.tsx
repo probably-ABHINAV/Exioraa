@@ -1,6 +1,4 @@
-The code fixes the unclosed main tag and replaces LiveChat with EnhancedLiveChat.
-```
-```replit_final_file
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -299,7 +297,6 @@ export default function ExioraaWebsite() {
 
       {/* About Modal */}
       {mounted && <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />}
-    </main>
     </div>
   )
 }
