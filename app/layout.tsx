@@ -1,18 +1,27 @@
-import type React from "react"
+
+import type { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Exioraa - Digital Innovation Studio",
-  description: "We design, build & scale digital experiences",
-    generator: 'v0.dev'
+  description: "Digital innovation studio specializing in web development, mobile applications, UI/UX design, and digital transformation solutions.",
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-black font-space-grotesk" suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+      <body className="font-sans antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
         </ThemeProvider>
       </body>

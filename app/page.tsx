@@ -1,312 +1,318 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Github, Twitter, Linkedin, Instagram } from "lucide-react"
-import { Hero3D } from "@/components/hero-3d"
-import { AnimatedServices } from "@/components/animated-services"
-import { ParallaxProjects } from "@/components/parallax-projects"
-import { TechStack3D } from "@/components/tech-stack-3d"
-import { AboutModal } from "@/components/about-modal"
-import { MobileNavigation } from "@/components/mobile-navigation"
-import { FeaturesShowcase } from "@/components/features-showcase"
-import { LiveChat } from "@/components/live-chat"
-import { FunctionalContact } from "@/components/functional-contact"
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { 
+  Menu, 
+  X, 
+  ArrowRight, 
+  Star, 
+  Users, 
+  Award, 
+  TrendingUp,
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Check
+} from 'lucide-react'
 
-export default function ExioraaWebsite() {
-  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+import { Hero3D } from '@/components/hero-3d'
+import { AnimatedServices } from '@/components/animated-services'
+import { TechStack3D } from '@/components/tech-stack-3d'
+import { ParallaxProjects } from '@/components/parallax-projects'
+import { FeaturesShowcase } from '@/components/features-showcase'
+import { InteractiveServiceExplorer } from '@/components/interactive-service-explorer'
+import { BudgetCalculator } from '@/components/budget-calculator'
+import { FunctionalContact } from '@/components/functional-contact'
+import { WebsiteAnalyzer } from '@/components/website-analyzer'
+import { ContentProofreader } from '@/components/content-proofreader'
+import { ImageOptimizer } from '@/components/image-optimizer'
+import { Testimonials } from '@/components/testimonials'
+import { NewsletterSignup } from '@/components/newsletter-signup'
+
+export default function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
 
   useEffect(() => {
-    setMounted(true)
+    const handleScroll = () => {
+      const sections = ['home', 'services', 'about', 'projects', 'contact']
+      const scrollPosition = window.scrollY + 100
+
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
-    if (typeof window === 'undefined') return
     const element = document.getElementById(sectionId)
     if (element) {
-      const navHeight = 80 // Height of fixed navigation
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-      const offsetPosition = elementPosition - navHeight
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-  }
-
-  // Scroll to top function
-  const scrollToTop = () => {
-    if (typeof window === 'undefined') return
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
+    setIsMenuOpen(false)
   }
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 transition-all duration-300 relative" style={{ position: 'fixed' }}>
+      <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 transition-all duration-300">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            {/* Animated Logo */}
-            <button
-              onClick={scrollToTop}
-              className="text-xl sm:text-2xl font-bold text-white hover:scale-110 transition-all duration-500 hover:rotate-3 relative group"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"
             >
-              <span className="relative z-10 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                Exioraa
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150"></div>
-            </button>
+              Exioraa
+            </motion.div>
 
-            {/* Desktop Navigation with Animations */}
-            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
               {[
-                { label: "Services", action: () => scrollToSection("services") },
-                { label: "About", action: () => setIsAboutModalOpen(true) },
-                { label: "Work", action: () => scrollToSection("work") },
-                { label: "Tools", action: () => scrollToSection("tools") },
-                { label: "Contact", action: () => scrollToSection("contact") },
-                { label: "Portal", action: () => window.open("/portal", "_blank") },
-              ].map((item, index) => (
+                { id: 'home', label: 'Home' },
+                { id: 'services', label: 'Services' },
+                { id: 'about', label: 'About' },
+                { id: 'projects', label: 'Projects' },
+                { id: 'contact', label: 'Contact' }
+              ].map((item) => (
                 <button
-                  key={item.label}
-                  onClick={item.action}
-                  className="relative text-gray-300 hover:text-white transition-all duration-300 group overflow-hidden text-sm lg:text-base"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`relative px-3 py-2 text-sm transition-colors ${
+                    activeSection === item.id 
+                      ? 'text-purple-400' 
+                      : 'text-gray-300 hover:text-white'
+                  }`}
                 >
-                  <span className="relative z-10 transform group-hover:scale-105 transition-transform duration-300">
-                    {item.label}
-                  </span>
-                  {/* Hover underline animation */}
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-cyan-400 group-hover:w-full transition-all duration-500 ease-out"></div>
-                  {/* Hover background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110"></div>
+                  {item.label}
+                  {activeSection === item.id && (
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </button>
               ))}
             </div>
 
-            {/* Desktop CTA Button */}
-            <Button
-              className="hidden md:flex relative bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 hover:scale-105 transition-all duration-300 overflow-hidden group text-sm lg:text-base"
-              onClick={() => scrollToSection("contact")}
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-gray-300 hover:text-white"
             >
-              <span className="relative z-10 transform group-hover:scale-105 transition-transform duration-300">
-                Get Started
-              </span>
-              {/* Button shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
-              {/* Button glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-cyan-400/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-150"></div>
-            </Button>
-
-            {/* Mobile Navigation */}
-            <MobileNavigation onNavigate={scrollToSection} onAboutClick={() => setIsAboutModalOpen(true)} />
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
 
-          {/* Navigation background animation */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/5 via-transparent to-cyan-900/5 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-        </div>
-
-        {/* Floating particles animation */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-pulse"></div>
-          <div
-            className="absolute top-1/3 right-1/3 w-1 h-1 bg-cyan-400/40 rounded-full animate-ping"
-            style={{ animationDelay: "1s" }}
-          ></div>
-          <div
-            className="absolute bottom-1/2 right-1/4 w-1.5 h-1.5 bg-purple-300/20 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
+          {/* Mobile Navigation */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden mt-4 pb-4 border-t border-gray-700"
+              >
+                <div className="flex flex-col space-y-2 pt-4">
+                  {[
+                    { id: 'home', label: 'Home' },
+                    { id: 'services', label: 'Services' },
+                    { id: 'about', label: 'About' },
+                    { id: 'projects', label: 'Projects' },
+                    { id: 'contact', label: 'Contact' }
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`text-left px-3 py-2 text-sm transition-colors ${
+                        activeSection === item.id 
+                          ? 'text-purple-400' 
+                          : 'text-gray-300 hover:text-white'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
 
-      {/* Hero Section with 3D */}
-      <section id="hero">
-        {mounted && <Hero3D />}
-      </section>
+      {/* Hero Section */}
+      <section id="home" className="relative min-h-screen flex items-center justify-center">
+        <Hero3D />
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Badge variant="outline" className="border-purple-500/50 text-purple-300 mb-6">
+              <Star className="w-4 h-4 mr-2" />
+              Digital Innovation Studio
+            </Badge>
 
-      {/* Animated Services Section */}
-      <section id="services">
-        {mounted && <AnimatedServices />}
-      </section>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              Transform Ideas Into
+              <br />
+              Digital Reality
+            </h1>
 
-      {/* Parallax Projects Section */}
-      <section id="work">
-        {mounted && <ParallaxProjects />}
-      </section>
-
-      {/* 3D Tech Stack */}
-      {mounted && <TechStack3D />}
-
-      {/* Features & Tools Section */}
-      <section id="tools">
-        {mounted && <FeaturesShowcase />}
-      </section>
-
-      {/* Functional Contact Section */}
-      <section id="contact">
-        {mounted && <FunctionalContact />}
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 sm:py-12 px-4 sm:px-6 border-t border-gray-800">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
-            <div className="col-span-1 sm:col-span-2 lg:col-span-2">
-              <button
-                onClick={scrollToTop}
-                className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4 hover:scale-105 transition-transform duration-300"
-              >
-                Exioraa
-              </button>
-              <p className="text-gray-400 mb-4 sm:mb-6 max-w-md text-sm sm:text-base">
-                We design, build, and scale digital experiences that drive growth and innovation for forward-thinking
-                brands across India and globally.
-              </p>
-              <div className="flex space-x-3 sm:space-x-4">
-                {[
-                  {
-                    icon: <Github className="w-4 h-4 sm:w-5 sm:h-5" />,
-                    href: "https://github.com/exioraa",
-                    label: "GitHub",
-                  },
-                  {
-                    icon: <Twitter className="w-4 h-4 sm:w-5 sm:h-5" />,
-                    href: "https://twitter.com/exioraa",
-                    label: "Twitter",
-                  },
-                  {
-                    icon: <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />,
-                    href: "https://linkedin.com/company/exioraa",
-                    label: "LinkedIn",
-                  },
-                  {
-                    icon: <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />,
-                    href: "https://instagram.com/exioraa",
-                    label: "Instagram",
-                  },
-                ].map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="text-gray-400 hover:text-white transition-colors duration-300 hover:scale-110 transform"
-                  >
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-white mb-3 sm:mb-4">Services</h4>
-              <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                <li>
-                  <button
-                    onClick={() => scrollToSection("services")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    Web Development
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("services")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    UI/UX Design
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("services")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    App Development
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("services")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    SEO Optimization
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-white mb-3 sm:mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                <li>
-                  <button
-                    onClick={() => setIsAboutModalOpen(true)}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    About
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("work")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    Work
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("tools")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    Tools
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => scrollToSection("contact")}
-                    className="hover:text-white transition-colors text-left"
-                  >
-                    Contact
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
-              © 2024-2025 Exioraa. All rights reserved.
+            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+              We create cutting-edge web applications, mobile solutions, and digital experiences 
+              that drive business growth and user engagement.
             </p>
-            <div className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6">
-              <a href="#" className="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">
-                GST: 29XXXXX1234X1ZX
-              </a>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button 
+                size="lg" 
+                onClick={() => scrollToSection('contact')}
+                className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 py-3"
+              >
+                Start Your Project
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => scrollToSection('projects')}
+                className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-3"
+              >
+                View Our Work
+              </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </footer>
+      </section>
 
-      {/* About Modal */}
-      {mounted && <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />}
+      {/* Services Section */}
+      <section id="services" className="py-20 px-4 sm:px-6">
+        <AnimatedServices />
+      </section>
 
-      {/* Live Chat */}
-      {mounted && <LiveChat />}
+      {/* About Section */}
+      <section id="about" className="py-20 px-4 sm:px-6">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <Badge variant="outline" className="border-cyan-500/50 text-cyan-300 mb-6">
+              <Users className="w-4 h-4 mr-2" />
+              About Exioraa
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+              Crafting Digital Excellence Since 2020
+            </h2>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+              We're a passionate team of designers, developers, and strategists dedicated to 
+              creating digital solutions that make a difference.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                icon: <Award className="w-8 h-8" />,
+                title: "50+ Projects",
+                description: "Successfully delivered across various industries"
+              },
+              {
+                icon: <Users className="w-8 h-8" />,
+                title: "Happy Clients",
+                description: "95% client satisfaction rate"
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8" />,
+                title: "Growth Focused",
+                description: "Avg 300% increase in user engagement"
+              }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="bg-gray-800/50 border-gray-700 text-center">
+                  <CardContent className="p-6">
+                    <div className="text-cyan-400 mb-4 flex justify-center">
+                      {stat.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-2">
+                      {stat.title}
+                    </h3>
+                    <p className="text-gray-400">
+                      {stat.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <TechStack3D />
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20">
+        <ParallaxProjects />
+      </section>
+
+      {/* Features Showcase */}
+      <FeaturesShowcase />
+
+      {/* Interactive Service Explorer */}
+      <InteractiveServiceExplorer />
+
+      {/* Budget Calculator */}
+      <BudgetCalculator />
+
+      {/* Website Analyzer */}
+      <WebsiteAnalyzer />
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20">
+        <FunctionalContact />
+      </section>
+
+      {/* Tools Section */}
+      <ContentProofreader />
+      <ImageOptimizer />
+
+      {/* Testimonials */}
+      <Testimonials />
+
+      {/* Newsletter Signup */}
+      <NewsletterSignup />
     </div>
   )
 }

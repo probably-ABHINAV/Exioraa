@@ -20,6 +20,7 @@ import {
   Target,
   Clock,
   Shield,
+  Settings,
 } from "lucide-react"
 
 interface Feature {
@@ -156,6 +157,33 @@ const features: Feature[] = [
           </div>
           <div className="bg-gray-700/50 border border-gray-600 rounded p-1 text-center text-gray-400">10:00 AM</div>
           <div className="bg-gray-700/50 border border-gray-600 rounded p-1 text-center text-gray-400">11:00 AM</div>
+        </div>
+      </div>
+    ),
+  },
+    {
+      id: "image-optimizer",
+      title: "Image Optimizer",
+      description: "Optimize images for web with quality and format adjustments",
+      icon: <Settings className="w-6 h-6" />,
+      color: "#f97316",
+      category: "Optimization",
+      benefits: ["Reduced file size", "Improved page load times", "Better user experience", "SEO boost"],
+    demo: (
+      <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+        <div className="flex items-center space-x-3 mb-3">
+          <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
+            <Zap className="w-4 h-4 text-orange-400" />
+          </div>
+          <span className="text-white text-sm">Optimize your images!</span>
+        </div>
+        <div className="space-y-2">
+          <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-2 text-xs text-orange-300">
+            ✓ Reduce image size by 50%
+          </div>
+          <div className="bg-gray-700/50 border border-gray-600 rounded-lg p-2 text-xs text-gray-400">
+            Convert to next-gen formats
+          </div>
         </div>
       </div>
     ),
