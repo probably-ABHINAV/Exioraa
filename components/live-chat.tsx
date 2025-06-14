@@ -1,107 +1,110 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { MessageSquare, X, Send, Bot, User, Minimize2, Maximize2 } from "lucide-react"
+import { MessageCircle, X, Send, Bot, User, Sparkles, Clock } from "lucide-react"
 
 interface Message {
-  id: string
+  id: number
   text: string
-  sender: "user" | "bot" | "agent"
+  sender: "user" | "bot"
   timestamp: Date
   typing?: boolean
 }
 
-const botResponses = [
-  "Hi! I'm Alex, your AI assistant. How can I help you today?",
-  "I'd be happy to help you with that! Let me connect you with one of our specialists.",
-  "That's a great question! Our team typically responds within 2-3 business days for project inquiries.",
-  "I can help you get started with a free consultation. Would you like me to schedule that for you?",
-  "For technical questions, I'll connect you with our development team. They're the experts!",
-  "Thanks for your interest in Exioraa! Let me gather some information to better assist you.",
+const quickReplies = [
+  "What services do you offer?",
+  "How much does a website cost?",
+  "What's your typical timeline?",
+  "Can I see your portfolio?"
 ]
 
-const quickReplies = [
-  "Get a quote",
-  "Schedule consultation",
-  "View portfolio",
-  "Technical support",
-  "Pricing information",
-]
+const faqResponses: Record<string, string> = {
+  "services": "We specialize in web development, mobile apps, UI/UX design, e-commerce solutions, and digital marketing. Each project is tailored to your specific needs and goals.",
+  "price|cost|pricing": "Our pricing is project-based and depends on scope, complexity, and timeline. Basic websites start at $2,500, while custom applications range from $10,000+. Would you like a personalized quote?",
+  "time|timeline|deadline|duration": "Most projects take 4-12 weeks depending on complexity. Simple websites: 2-4 weeks, E-commerce: 6-8 weeks, Custom applications: 8-16 weeks. What's your target launch date?",
+  "portfolio|work|examples": "You can view our featured projects in the 'Our Work' section above, or visit our full portfolio page. We've completed 100+ projects across various industries.",
+  "contact|reach|email|phone": "You can reach us at hello@exioraa.com, call us at (555) 123-4567, or use the contact form. We respond within 4 hours during business hours!",
+  "start|begin|get started": "Great! Let's start with understanding your project needs. What type of digital solution are you looking for? Website, mobile app, or something else?",
+  "support|maintenance": "We provide ongoing support and maintenance packages starting at $200/month. This includes updates, security monitoring, backups, and priority support.",
+  "technology|tech stack": "We use modern technologies like React, Next.js, Node.js, Python, AWS, and more. Our tech stack is chosen based on your project requirements for optimal performance."
+}
 
 export function LiveChat() {
   const [isOpen, setIsOpen] = useState(false)
-  const [isMinimized, setIsMinimized] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      text: "👋 Hi! I'm your AI assistant. I can help answer questions about our services, pricing, timelines, and more. What would you like to know?",
+      sender: "bot",
+      timestamp: new Date()
+    }
+  ])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [isOnline, setIsOnline] = useState(true)
-  const [unreadCount, setUnreadCount] = useState(0)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      // Initial bot message
-      setTimeout(() => {
-        addBotMessage(botResponses[0])
-      }, 1000)
-    }
-  }, [isOpen])
+    scrollToBottom()
+  }, [messages])
 
-  useEffect(() => {
-    if (!isOpen && messages.length > 0) {
-      setUnreadCount(messages.filter((m) => m.sender !== "user").length)
-    } else {
-      setUnreadCount(0)
-    }
-  }, [isOpen, messages])
+  const sendMessage = (text?: string) => {
+    const messageText = text || inputValue
+    if (!messageText.trim()) return
 
-  const addBotMessage = (text: string) => {
+    const userMessage: Message = {
+      id: Date.now(),
+      text: messageText,
+      sender: "user",
+      timestamp: new Date()
+    }
+
+    setMessages(prev => [...prev, userMessage])
+    setInputValue("")
     setIsTyping(true)
+
+    // Simulate typing delay
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          text,
-          sender: "bot",
-          timestamp: new Date(),
-        },
-      ])
+      const botResponse = getBotResponse(messageText.toLowerCase())
+      const botMessage: Message = {
+        id: Date.now() + 1,
+        text: botResponse,
+        sender: "bot",
+        timestamp: new Date()
+      }
+      setMessages(prev => [...prev, botMessage])
       setIsTyping(false)
     }, 1500)
   }
 
-  const addUserMessage = (text: string) => {
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text,
-      sender: "user",
-      timestamp: new Date(),
+  const getBotResponse = (input: string): string => {
+    // Check for FAQ matches
+    for (const [keywords, response] of Object.entries(faqResponses)) {
+      const keywordList = keywords.split("|")
+      if (keywordList.some(keyword => input.includes(keyword))) {
+        return response
+      }
     }
-    setMessages((prev) => [...prev, newMessage])
 
-    // Simulate bot response
-    setTimeout(() => {
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)]
-      addBotMessage(randomResponse)
-    }, 2000)
-  }
-
-  const handleSend = () => {
-    if (inputValue.trim()) {
-      addUserMessage(inputValue)
-      setInputValue("")
+    // Greeting responses
+    if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
+      return "Hello! Great to meet you! 🎉 I'm here to help you learn more about our digital solutions. What brings you here today?"
     }
-  }
 
-  const handleQuickReply = (reply: string) => {
-    addUserMessage(reply)
-  }
+    // Thank you responses
+    if (input.includes("thank") || input.includes("thanks")) {
+      return "You're very welcome! 😊 Is there anything else I can help you with today?"
+    }
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    // Default response with call-to-action
+    return "That's a great question! For detailed information about your specific needs, I'd recommend scheduling a free consultation with our team. They can provide personalized recommendations and accurate timelines. Would you like me to connect you with a specialist?"
   }
 
   return (
@@ -111,222 +114,182 @@ export function LiveChat() {
         className="fixed bottom-6 right-6 z-50"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ delay: 2, type: "spring", stiffness: 300 }}
+        transition={{ delay: 2, type: "spring", stiffness: 200 }}
       >
-        <Button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300 relative"
-        >
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <X className="w-6 h-6" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="open"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <MessageSquare className="w-6 h-6" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+        <div className="relative">
+          {/* Notification Badge */}
+          <motion.div
+            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 3 }}
+          >
+            <span className="text-xs text-white font-bold">1</span>
+          </motion.div>
 
-          {/* Unread Badge */}
-          {unreadCount > 0 && !isOpen && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            >
-              {unreadCount}
-            </motion.div>
-          )}
-
-          {/* Online Indicator */}
-          <div
-            className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${
-              isOnline ? "bg-green-500" : "bg-gray-500"
-            }`}
-          ></div>
-        </Button>
+          <Button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 shadow-2xl shadow-purple-500/25 hover:scale-110 transition-transform duration-200"
+          >
+            <AnimatePresence mode="wait">
+              {isOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="w-6 h-6" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="chat"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <MessageCircle className="w-6 h-6" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Button>
+        </div>
       </motion.div>
 
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.8 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              height: isMinimized ? "60px" : "500px",
-            }}
-            exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-24 right-6 w-80 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl z-50 overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-80 sm:w-96"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.3, type: "spring" }}
           >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-purple-600 to-cyan-600 p-4 flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold">Exioraa Support</h3>
-                  <div className="flex items-center space-x-1">
-                    <div className={`w-2 h-2 rounded-full ${isOnline ? "bg-green-400" : "bg-gray-400"}`}></div>
-                    <span className="text-white/80 text-xs">{isOnline ? "Online" : "Offline"}</span>
+            <Card className="bg-gray-900/95 backdrop-blur-md border-gray-700/50 shadow-2xl">
+              <CardHeader className="bg-gradient-to-r from-purple-600/20 to-cyan-600/20 border-b border-gray-700/50 pb-3">
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <div className="relative">
+                    <Bot className="w-5 h-5 text-cyan-400" />
+                    <Sparkles className="w-3 h-3 text-yellow-400 absolute -top-1 -right-1" />
                   </div>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setIsMinimized(!isMinimized)}
-                  className="text-white hover:bg-white/20 p-1 h-auto"
-                >
-                  {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setIsOpen(false)}
-                  className="text-white hover:bg-white/20 p-1 h-auto"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-
-            {!isMinimized && (
-              <>
+                  AI Assistant
+                  <div className="ml-auto flex items-center gap-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-gray-400">Online</span>
+                  </div>
+                </CardTitle>
+                <p className="text-xs text-gray-400 mt-1">Typically responds instantly</p>
+              </CardHeader>
+              <CardContent className="p-0">
                 {/* Messages */}
                 <div className="h-80 overflow-y-auto p-4 space-y-4">
-                  {messages.map((message) => (
-                    <motion.div
-                      key={message.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
-                    >
-                      <div
-                        className={`flex items-start space-x-2 max-w-xs ${
-                          message.sender === "user" ? "flex-row-reverse space-x-reverse" : ""
-                        }`}
+                  <AnimatePresence>
+                    {messages.map((message) => (
+                      <motion.div
+                        key={message.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                       >
-                        <div
-                          className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                            message.sender === "user" ? "bg-gradient-to-r from-purple-500 to-cyan-500" : "bg-gray-700"
-                          }`}
-                        >
-                          {message.sender === "user" ? (
-                            <User className="w-3 h-3 text-white" />
-                          ) : (
-                            <Bot className="w-3 h-3 text-white" />
-                          )}
-                        </div>
-                        <div
-                          className={`px-3 py-2 rounded-lg ${
+                        <div className={`max-w-[85%] ${
+                          message.sender === "user" ? "ml-4" : "mr-4"
+                        }`}>
+                          <div className={`p-3 rounded-2xl ${
                             message.sender === "user"
-                              ? "bg-gradient-to-r from-purple-600 to-cyan-600 text-white"
-                              : "bg-gray-700 text-gray-100"
-                          }`}
-                        >
-                          <p className="text-sm">{message.text}</p>
-                          <p
-                            className={`text-xs mt-1 ${
-                              message.sender === "user" ? "text-purple-100" : "text-gray-400"
-                            }`}
-                          >
-                            {formatTime(message.timestamp)}
-                          </p>
+                              ? "bg-gradient-to-r from-purple-600 to-cyan-600 text-white rounded-br-md"
+                              : "bg-gray-800 text-gray-300 border border-gray-700/50 rounded-bl-md"
+                          }`}>
+                            <div className="flex items-start gap-2">
+                              {message.sender === "bot" && (
+                                <Bot className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                              )}
+                              <p className="text-sm leading-relaxed">{message.text}</p>
+                            </div>
+                          </div>
+                          <div className={`flex items-center gap-1 mt-1 text-xs text-gray-500 ${
+                            message.sender === "user" ? "justify-end" : "justify-start"
+                          }`}>
+                            <Clock className="w-3 h-3" />
+                            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
 
                   {/* Typing Indicator */}
                   {isTyping && (
                     <motion.div
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="flex justify-start"
                     >
-                      <div className="flex items-start space-x-2">
-                        <div className="w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center">
-                          <Bot className="w-3 h-3 text-white" />
-                        </div>
-                        <div className="bg-gray-700 px-3 py-2 rounded-lg">
-                          <div className="flex space-x-1">
+                      <div className="bg-gray-800 border border-gray-700/50 p-3 rounded-2xl rounded-bl-md mr-4">
+                        <div className="flex items-center gap-1">
+                          <Bot className="w-4 h-4 text-cyan-400" />
+                          <div className="flex gap-1">
                             <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                            <div
-                              className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                              style={{ animationDelay: "0.1s" }}
-                            ></div>
-                            <div
-                              className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                              style={{ animationDelay: "0.2s" }}
-                            ></div>
+                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
                           </div>
                         </div>
                       </div>
                     </motion.div>
                   )}
+
+                  <div ref={messagesEndRef} />
                 </div>
 
                 {/* Quick Replies */}
-                {messages.length <= 1 && (
+                {messages.length === 1 && (
                   <div className="px-4 pb-2">
+                    <p className="text-xs text-gray-500 mb-2">Quick questions:</p>
                     <div className="flex flex-wrap gap-2">
                       {quickReplies.map((reply, index) => (
-                        <Button
-                          key={index}
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleQuickReply(reply)}
-                          className="text-xs border-gray-600 text-gray-300 hover:bg-gray-700"
+                        <motion.button
+                          key={reply}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: index * 0.1 }}
+                          onClick={() => sendMessage(reply)}
+                          className="text-xs bg-gray-800/50 hover:bg-gray-700/50 text-gray-300 px-3 py-1.5 rounded-full border border-gray-700/30 hover:border-purple-500/50 transition-all duration-200"
                         >
                           {reply}
-                        </Button>
+                        </motion.button>
                       ))}
                     </div>
                   </div>
                 )}
 
                 {/* Input */}
-                <div className="p-4 border-t border-gray-700">
-                  <div className="flex space-x-2">
+                <div className="p-4 border-t border-gray-700/50">
+                  <div className="flex gap-2">
                     <Input
-                      placeholder="Type your message..."
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      onKeyPress={(e) => e.key === "Enter" && handleSend()}
-                      className="bg-gray-800 border-gray-600 text-white text-sm"
+                      onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                      placeholder="Ask me anything..."
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400 rounded-full"
+                      disabled={isTyping}
                     />
                     <Button
-                      onClick={handleSend}
+                      onClick={() => sendMessage()}
                       size="sm"
-                      className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700"
+                      disabled={isTyping || !inputValue.trim()}
+                      className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 rounded-full px-4"
                     >
                       <Send className="w-4 h-4" />
                     </Button>
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">We typically reply within a few minutes</p>
+                  <p className="text-xs text-gray-500 mt-2 text-center">
+                    🤖 Powered by AI • Available 24/7
+                  </p>
                 </div>
-              </>
-            )}
+              </CardContent>
+            </Card>
           </motion.div>
         )}
       </AnimatePresence>

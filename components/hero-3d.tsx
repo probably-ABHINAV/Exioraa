@@ -549,13 +549,13 @@ export function Hero3D() {
       <motion.div className="relative z-10 text-center px-4 sm:px-6 max-w-6xl mx-auto" style={{ y, opacity }}>
         <motion.div
           className="mb-4 sm:mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          initial={{ opacity: 0, y: 30, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 100 }}
         >
           <Badge
             variant="outline"
-            className="border-purple-500/50 text-purple-300 mb-6 sm:mb-8 text-xs sm:text-sm backdrop-blur-md bg-black/30 shadow-2xl"
+            className="border-purple-500/50 text-purple-300 mb-6 sm:mb-8 text-xs sm:text-sm backdrop-blur-md bg-black/30 shadow-2xl hover:scale-105 transition-transform duration-300"
           >
             <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
             Digital Innovation Studio
@@ -563,31 +563,40 @@ export function Hero3D() {
         </motion.div>
         <motion.h1
           className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
         >
-          <span className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-2xl">
+          <motion.span 
+            className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-2xl block"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
             Transform Your Business
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl">
+          </motion.span>
+          <motion.span 
+            className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl block"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
             With Digital Excellence
-          </span>
+          </motion.span>
         </motion.h1>
         <motion.p
           className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
         >
             We partner with businesses to deliver cutting-edge digital solutions that drive growth, enhance user experience, and maximize ROI. From strategic planning to full-scale implementation, we ensure your digital transformation journey is seamless and successful.
           </motion.p>
         <motion.div
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 1.2, duration: 0.8, type: "spring" }}
         >
           <Button
             size="lg"
