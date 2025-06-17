@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useRef, useState, useEffect } from "react"
@@ -167,7 +166,7 @@ function FusionCore({ isActive }: { isActive: boolean }) {
             ease: "easeInOut"
           }}
         />
-        
+
         {/* Core */}
         <motion.div
           className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-cyan-400 flex items-center justify-center relative overflow-hidden"
@@ -194,7 +193,7 @@ function FusionCore({ isActive }: { isActive: boolean }) {
           >
             E
           </motion.div>
-          
+
           {/* Pulse effect */}
           <motion.div
             className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400 to-cyan-400"
@@ -270,7 +269,7 @@ function TechOrb({
         }}
       >
         <span className="text-2xl relative z-10">{tech.logo}</span>
-        
+
         {/* Glow effect */}
         <motion.div
           className="absolute inset-0 rounded-full"
@@ -287,7 +286,7 @@ function TechOrb({
           }}
         />
       </div>
-      
+
       {/* Tooltip */}
       <AnimatePresence>
         {isHovered && (
@@ -341,7 +340,7 @@ function TechFusionCoreContent() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-black to-cyan-900/20"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.1),transparent_50%)]"></div>
-        
+
         {/* Static background particles */}
         {particlePositions.map((particle, i) => (
           <motion.div
@@ -403,7 +402,7 @@ function TechFusionCoreContent() {
           >
             {/* Central Fusion Core */}
             <FusionCore isActive={!!selectedTech} />
-            
+
             {/* Orbit rings visualization */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <motion.div
@@ -417,7 +416,7 @@ function TechFusionCoreContent() {
                 transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
               />
             </div>
-            
+
             {/* Tech Orbs */}
             {technologies.map((tech) => (
               <motion.div
@@ -463,10 +462,10 @@ function TechFusionCoreContent() {
                   </span>
                 </DialogTitle>
               </DialogHeader>
-              
+
               <div className="space-y-6">
                 <p className="text-gray-300 text-lg">{selectedTech.description}</p>
-                
+
                 <div className="space-y-4">
                   <div>
                     <h4 className="text-purple-300 font-semibold mb-2 flex items-center">
@@ -475,7 +474,7 @@ function TechFusionCoreContent() {
                     </h4>
                     <p className="text-gray-400">{selectedTech.poweringExioraa}</p>
                   </div>
-                  
+
                   <div>
                     <h4 className="text-cyan-300 font-semibold mb-2 flex items-center">
                       <Code2 className="w-4 h-4 mr-2" />
@@ -484,7 +483,7 @@ function TechFusionCoreContent() {
                     <p className="text-gray-400">{selectedTech.useCase}</p>
                   </div>
                 </div>
-                
+
                 <motion.div
                   className="flex items-center justify-center py-4"
                   animate={{
@@ -518,20 +517,19 @@ export function TechFusionCore() {
   return (
     <NoSSR 
       fallback={
-        <section className="py-24 px-6 bg-gray-950 relative overflow-hidden min-h-screen flex items-center">
+        <section id="tech-fusion" data-section="tech-fusion" className="py-24 px-6 bg-gray-950 relative overflow-hidden min-h-screen flex items-center">
           <div className="container mx-auto max-w-7xl relative z-10">
             <div className="text-center mb-16">
-              <div className="border border-purple-500/50 text-purple-300 mb-6 bg-purple-500/10 inline-flex items-center px-3 py-1 rounded-full text-sm">
+              <Badge variant="outline" className="border-purple-500/50 text-purple-300 mb-6">
                 <Zap className="w-4 h-4 mr-2" />
                 Fusion Core Technology
-              </div>
-              <h2 className="text-4xl md:text-6xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              </Badge>
+              <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                <span className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent block mb-2">
                   Powered by
                 </span>
-                <br />
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                  Modern Technology
+                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent block">
+                  Fusion Core Technology
                 </span>
               </h2>
               <p className="text-gray-400 mb-4 max-w-2xl mx-auto text-lg">
@@ -540,7 +538,7 @@ export function TechFusionCore() {
               </p>
             </div>
             <div className="relative h-[600px] max-w-4xl mx-auto flex items-center justify-center">
-              <div className="text-purple-300">Loading...</div>
+              <div className="text-purple-300 animate-pulse">Loading Tech Stack...</div>
             </div>
           </div>
         </section>

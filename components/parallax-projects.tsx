@@ -213,7 +213,7 @@ export function ParallaxProjects() {
   }
 
   return (
-    <section id="work" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 relative overflow-hidden" ref={containerRef}>
+    <section ref={containerRef} id="work" data-section="work" className="relative py-24 px-6 bg-gradient-to-br from-gray-950 via-purple-950/20 to-gray-950 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-cyan-900/20"></div>
         <div className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>

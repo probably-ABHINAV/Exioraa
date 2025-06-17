@@ -1,7 +1,7 @@
 "use client"
 
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Code, Palette, Smartphone, Search, Box, Brush, Database, Play, Layers } from "lucide-react"
@@ -66,11 +66,28 @@ const services = [
 ]
 
 export function AnimatedServices() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.2 })
+  const containerRef = useRef<HTMLElement>(null)
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
 
   return (
-    <section id="services" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 relative overflow-hidden">
+    <section id="services" data-section="services" className="relative py-24 px-4 sm:px-6 bg-gradient-to-br from-gray-900 via-black to-purple-900/30 overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+          linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%)
+        `
+      }}
+      ref={containerRef}
+    >
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-cyan-900/20"></div>
         <div className="absolute top-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -104,14 +121,13 @@ export function AnimatedServices() {
         </motion.div>
 
         <div
-          ref={ref}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
         >
           {services.map((service, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
               transition={{ duration: 0.5, delay: service.delay }}
               whileHover={{
                 scale: 1.05,

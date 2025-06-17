@@ -498,6 +498,7 @@ export function Hero3D() {
   const { scrollYProgress } = useScrollMotion({
     target: containerRef,
     offset: ["start start", "end start"],
+    layoutEffect: false,
   })
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -300])
@@ -505,9 +506,16 @@ export function Hero3D() {
 
   // Scroll functions
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    // Handle both direct element and section ref approach
+    let element = document.getElementById(sectionId)
+
+    // If not found by ID, try querySelector for section with data attribute
+    if (!element) {
+      element = document.querySelector(`[data-section="${sectionId}"]`)
+    }
+
     if (element) {
-      const navHeight = 80
+      const navHeight = 100 // Increased for better spacing
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
       const offsetPosition = elementPosition - navHeight
 
@@ -515,11 +523,16 @@ export function Hero3D() {
         top: offsetPosition,
         behavior: "smooth",
       })
+    } else {
+      console.warn(`Section "${sectionId}" not found`)
     }
   }
+  useEffect(() => {
+   
+  }, [])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24">
       <div className="absolute inset-0 z-0">
         <Suspense fallback={<LoadingFallback />}>
           <Canvas
@@ -562,13 +575,13 @@ export function Hero3D() {
           </Badge>
         </motion.div>
         <motion.h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black mb-6 sm:mb-8 leading-[0.9] tracking-tight"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
         >
           <motion.span 
-            className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent drop-shadow-2xl block"
+            className="bg-gradient-to-r from-white via-gray-100 to-purple-100 bg-clip-text text-transparent drop-shadow-2xl block mb-2 font-extrabold"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -576,7 +589,7 @@ export function Hero3D() {
             Transform Your Business
           </motion.span>
           <motion.span 
-            className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl block"
+            className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-2xl block font-extrabold"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
@@ -585,34 +598,44 @@ export function Hero3D() {
           </motion.span>
         </motion.h1>
         <motion.p
-          className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto"
+          className="text-xl md:text-2xl lg:text-3xl text-gray-200 mb-10 leading-relaxed max-w-5xl mx-auto font-light tracking-wide"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
         >
-            We partner with businesses to deliver cutting-edge digital solutions that drive growth, enhance user experience, and maximize ROI. From strategic planning to full-scale implementation, we ensure your digital transformation journey is seamless and successful.
+            We partner with <span className="text-cyan-300 font-medium">visionary businesses</span> to deliver cutting-edge digital solutions that drive <span className="text-purple-300 font-medium">exponential growth</span>, enhance user experience, and maximize ROI.
           </motion.p>
         <motion.div
-          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4"
           initial={{ opacity: 0, y: 40, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 1.2, duration: 0.8, type: "spring" }}
         >
           <Button
             size="lg"
-            className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 sm:py-6 hover:scale-105 transition-all duration-300 backdrop-blur-md shadow-2xl"
-            onClick={() => scrollToSection("contact")}
+            className="group w-full sm:w-auto bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 hover:from-purple-700 hover:via-pink-700 hover:to-cyan-700 text-base lg:text-lg px-8 sm:px-10 py-5 sm:py-7 hover:scale-105 transition-all duration-300 backdrop-blur-md shadow-2xl border border-purple-400/30 relative overflow-hidden"
+            onClick={() => scrollToSection("tech-fusion")}
           >
-            Let's Build Something Great
-            <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="relative z-10 font-semibold">Explore the Tech Stack</span>
+            <ArrowRight className="ml-3 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Button>
           <Button
             size="lg"
             variant="outline"
-            className="w-full sm:w-auto border-gray-600 text-white hover:bg-gray-800/50 text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 sm:py-6 hover:scale-105 transition-all duration-300 backdrop-blur-md shadow-2xl"
+            className="group w-full sm:w-auto border-2 border-cyan-400/50 text-white hover:bg-cyan-400/10 hover:border-cyan-400 text-base lg:text-lg px-8 sm:px-10 py-5 sm:py-7 hover:scale-105 transition-all duration-300 backdrop-blur-md shadow-2xl relative overflow-hidden"
             onClick={() => scrollToSection("work")}
           >
-            View Our Work
+            <span className="relative z-10 font-semibold">View Our Work</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/5 to-purple-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </Button>
+          <Button
+            size="lg"
+            variant="ghost"
+            className="group w-full sm:w-auto text-gray-300 hover:text-white border border-gray-600/50 hover:border-gray-400/50 text-base lg:text-lg px-8 sm:px-10 py-5 sm:py-7 hover:scale-105 transition-all duration-300 backdrop-blur-md shadow-xl"
+            onClick={() => scrollToSection("contact")}
+          >
+            <span className="relative z-10 font-medium">Get Started</span>
           </Button>
         </motion.div>
         <motion.button

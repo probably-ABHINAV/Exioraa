@@ -134,4 +134,64 @@ export function ImageOptimizer() {
   )
 }
 
-export default ImageOptimizer
+"use client"
+
+import Image from "next/image"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+
+interface OptimizedImageProps {
+  src: string
+  alt: string
+  width?: number
+  height?: number
+  className?: string
+  priority?: boolean
+  fill?: boolean
+  quality?: number
+}
+
+export function OptimizedImage({
+  src,
+  alt,
+  width,
+  height,
+  className,
+  priority = false,
+  fill = false,
+  quality = 75,
+  ...props
+}: OptimizedImageProps) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  return (
+    <div className={cn("relative overflow-hidden", className)}>
+      {isLoading && !error && (
+        <div className="absolute inset-0 bg-gray-800/50 animate-pulse rounded" />
+      )}
+
+      <Image
+        src={error ? "/placeholder.svg" : src}
+        alt={alt}
+        width={width}
+        height={height}
+        fill={fill}
+        priority={priority}
+        quality={quality}
+        className={cn(
+          "transition-opacity duration-300",
+          isLoading ? "opacity-0" : "opacity-100"
+        )}
+        onLoad={() => setIsLoading(false)}
+        onError={() => {
+          setError(true)
+          setIsLoading(false)
+        }}
+        {...props}
+      />
+    </div>
+  )
+}
+
+export default OptimizedImage

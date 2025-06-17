@@ -120,7 +120,7 @@ export function FunctionalContact() {
   }
 
   return (
-    <section id="contact" className="py-24 px-6 relative overflow-hidden">
+    <section id="contact" data-section="contact" className="relative py-24 px-6 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-cyan-900/20"></div>
       </div>

@@ -14,6 +14,7 @@ import { FunctionalContact } from "@/components/functional-contact"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { LiveChat } from "@/components/live-chat"
 import { StructuredData } from "@/components/structured-data"
+import { PerformanceMonitor } from "@/components/performance-monitor"
 
 export default function HomePage() {
   const [isAboutOpen, setIsAboutOpen] = useState(false)
@@ -50,6 +51,7 @@ export default function HomePage() {
   return (
     <>
       <StructuredData />
+      <PerformanceMonitor />
 
       {/* Header */}
       <Header 
@@ -60,42 +62,42 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="relative">
         {/* Hero Section */}
-        <section className="min-h-screen pt-16">
+        <section className="min-h-screen">
           <Hero3D />
         </section>
 
         {/* Services Section */}
-        <section ref={servicesRef} className="py-20">
+        <section id="services" data-section="services" ref={servicesRef} className="py-20">
           <AnimatedServices />
         </section>
 
         {/* Skills Section */}
-        <section ref={skillsRef} className="py-20">
+        <section id="skills" data-section="skills" ref={skillsRef} className="py-20">
           <SkillProgressBars />
         </section>
 
         {/* Work/Projects Section */}
-        <section ref={workRef} className="py-20">
+        <section id="work" data-section="work" ref={workRef} className="py-20">
           <ParallaxProjects />
         </section>
 
         {/* Blog & Case Studies Section */}
-        <section ref={blogRef} className="py-20">
+        <section id="blog" data-section="blog" ref={blogRef} className="py-20">
           <BlogCaseStudies />
         </section>
 
         {/* Tech Stack Section */}
-        <section ref={techStackRef}>
+        <section id="tech-stack" data-section="tech-stack" ref={techStackRef}>
           <TechFusionCore />
         </section>
 
         {/* Testimonials Section */}
-        <section ref={testimonialsRef} className="py-20">
+        <section id="testimonials" data-section="testimonials" ref={testimonialsRef} className="py-20">
           <Testimonials />
         </section>
 
         {/* Contact Section */}
-        <section ref={contactRef} className="py-20">
+        <section id="contact" data-section="contact" ref={contactRef} className="py-20">
           <FunctionalContact />
         </section>
 

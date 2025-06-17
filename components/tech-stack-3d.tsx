@@ -108,6 +108,7 @@ function TechBubble({
           anchorY="middle"
           onPointerOver={() => (document.body.style.cursor = "pointer")}
           onPointerOut={() => (document.body.style.cursor = "default")}
+          onClick={onClick}
         >
           {name}
         </Text>
@@ -145,7 +146,9 @@ function TechCloud() {
           position={tech.position}
           color={tech.color}
           description={tech.description}
-          onClick={() => handleTechClick(tech.name)}
+          onClick={() => {
+            handleTechClick(tech.name)
+          }}
           isExploded={explodedTech === tech.name}
         />
       ))}
@@ -201,6 +204,10 @@ function TechStackFallback() {
 export function TechStack3D() {
   const [selectedTech, setSelectedTech] = useState<(typeof technologies)[0] | null>(null)
 
+  const handleTechSelection = (tech: typeof technologies[0]) => {
+    setSelectedTech(tech)
+  }
+
   return (
     <section className="py-24 px-6 bg-gray-900/30 relative overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -229,7 +236,7 @@ export function TechStack3D() {
           <p className="text-gray-400 mb-4">Click on any technology bubble to see it burst!</p>
         </motion.div>
 
-        <div className="h-[500px] w-full">
+        <div className="relative h-[500px] w-full">
           <Suspense fallback={<TechStackFallback />}>
             <Canvas
               onCreated={({ gl }) => {
